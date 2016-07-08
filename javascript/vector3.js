@@ -49,9 +49,30 @@ class Vector3
     return this
   }
 
-  static Random()
+  random(min, max)
   {
+    if(min instanceof Vector3)
+    {
+      this.x = Random.Next(min.x, max.x)
+      this.y = Random.Next(min.y, max.y)
+      this.z = Random.Next(min.z, max.z)
+    }
+    else
+    {
+      this.x = Random.Next(min, max)
+      this.y = Random.Next(min, max)
+      this.z = Random.Next(min, max)
+    }
 
+    return this
+  }
+
+  static Random(min, max)
+  {
+    if(min instanceof Vector3)
+      return new Vector3(Random.Next(min.x, max.x), Random.Next(min.y, max.y), Random.Next(min.z, max.z))
+    else
+      return new Vector3(Random.Next(min, max), Random.Next(min, max), Random.Next(min, max))
   }
 
   equals(vector)
