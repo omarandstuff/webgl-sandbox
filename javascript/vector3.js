@@ -94,7 +94,7 @@ class Vector3
     return array
   }
 
-  loadFromAray(array, index)
+  loadFromAray(array, index = 0)
   {
     this.x = array[index] || 0
     this.y = array[index + 1] || 0
@@ -103,7 +103,7 @@ class Vector3
     return this
   }
 
-  static FromArray(array, index)
+  static FromArray(array, index = 0)
   {
     return new Vector3(array[index], array[index + 1], array[index + 2])
   }

@@ -66,7 +66,7 @@ class Matrix4
     return this
   }
 
-  static FromArray(array, index)
+  static FromArray(array, index = 0)
   {
     return new Matrix4(array.slice(index, index + 16))
   }
