@@ -17,3 +17,5 @@ Math.toRadians = function(angle)
 {
   return angle * 0.01745329251994329576;
 }
+
+Math.epsilon = 0.000001;

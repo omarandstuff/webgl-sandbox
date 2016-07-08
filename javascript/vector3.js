@@ -507,23 +507,34 @@ class Vector3
     return result.reflect(normal)
   }
 
-  transform(trasformer)
+  transform(transformer)
   {
-    if(trasformer instanceof Matrix4)
+    if(transformer instanceof Matrix4)
     {
-      this.x = trasformer.elements[0] * this.x + trasformer.elements[4] * this.y + trasformer.elements[8] * this.z + trasformer.elements[12]
-      this.y = trasformer.elements[1] * this.x + trasformer.elements[5] * this.y + trasformer.elements[9] * this.z + trasformer.elements[13]
-      this.z = trasformer.elements[2] * this.x + trasformer.elements[6] * this.y + trasformer.elements[10] * this.z + trasformer.elements[14]
+      this.x = transformer.elements[0] * this.x + transformer.elements[4] * this.y + transformer.elements[8] * this.z + transformer.elements[12]
+      this.y = transformer.elements[1] * this.x + transformer.elements[5] * this.y + transformer.elements[9] * this.z + transformer.elements[13]
+      this.z = transformer.elements[2] * this.x + transformer.elements[6] * this.y + transformer.elements[10] * this.z + transformer.elements[14]
+    }
+    else if(transformer instanceof Quaternion)
+    {
+      var ix =  transformer.w * this.x + transformer.y * this.z - transformer.z * this.y
+      var iy =  transformer.w * this.y + transformer.z * this.x - transformer.x * this.z
+      var iz =  transformer.w * this.z + transformer.x * this.y - transformer.y * this.x
+      var iw = -transformer.x * this.x - transformer.y * this.y - transformer.z * this.z
+
+      this.x = ix * transformer.w + iw * - transformer.x + iy * - transformer.z - iz * - transformer.y
+      this.y = iy * transformer.w + iw * - transformer.y + iz * - transformer.x - ix * - transformer.z
+      this.z = iz * transformer.w + iw * - transformer.z + ix * - transformer.y - iy * - transformer.x
     }
 
     return this
   }
 
-  static Transformed(vector, trasformer)
+  static Transformed(vector, transformer)
   {
     var result = new Vector3(vector)
 
-    return result.transform(trasformer)
+    return result.transform(transformer)
   }
 
   static forward()
