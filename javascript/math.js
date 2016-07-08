@@ -6,10 +6,10 @@ Math.Clamp = function(number, min, max)
 
 Math.ToDegrees = function(angle)
 {
-  return angle * 0.01745329252;
+  return angle * 57.29577951308232087679;
 }
 
 Math.ToRadians = function(angle)
 {
-  return angle * 57.295779513;
+  return angle * 0.01745329251994329576;
 }
