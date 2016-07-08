@@ -69,10 +69,9 @@ class Vector3
 
   static Random(min, max)
   {
-    if(min instanceof Vector3)
-      return new Vector3(Random.Next(min.x, max.x), Random.Next(min.y, max.y), Random.Next(min.z, max.z))
-    else
-      return new Vector3(Random.Next(min, max), Random.Next(min, max), Random.Next(min, max))
+    var result = new Vector3()
+
+    return result.random(min, max)
   }
 
   equals(vector)
@@ -157,23 +156,23 @@ class Vector3
 
   static WithClampedLength(vector, min, max)
   {
-    var length = vector.length()
+    var result = new Vector3(vector)
 
-    return Vector3.Multiply(vector, Math.clamp(length, min, max) / length)
+    return result.clampLength(min, max)
   }
 
   sqrDistance(vector)
   {
-    return Vector3.SqrDistance(this, vector)
+    var dx = vector.x - this.x
+    var dy = vector.y - this.y
+    var dz = vector.z - this.z
+
+    return dx * dx + dy * dy + dz * dz
   }
 
   static SqrDistance(from, to)
   {
-    var dx = to.x - from.x
-    var dy = to.y - from.y
-    var dz = to.z - from.z
-
-    return dx * dx + dy * dy + dz * dz
+    return from.sqrDistance(to)
   }
 
   distance(vector)
@@ -183,7 +182,7 @@ class Vector3
 
   static Distance(from, to)
   {
-    return Math.sqrt(Vector3.SqrDistance(from, to))
+    return Math.sqrt(from.sqrDistance(to))
   }
 
   angle(vector)
@@ -218,10 +217,9 @@ class Vector3
 
   static Add(vector, factor)
   {
-    if(factor instanceof Vector3)
-      return new Vector3(vector.x + factor.x, vector.y + factor.y, vector.z + factor.z)
-    else
-      return new Vector3(vector.x + factor, vector.y + factor, vector.z + factor)
+    var result = new Vector3(vector)
+
+    return result.add(factor)
   }
 
   sub(factor)
@@ -244,10 +242,9 @@ class Vector3
 
   static Sub(vector, factor)
   {
-    if(factor instanceof Vector3)
-      return new Vector3(vector.x - factor.x, vector.y - factor.y, vector.z - factor.z)
-    else
-      return new Vector3(vector.x - factor, vector.y - factor, vector.z - factor)
+    var result = new Vector3(vector)
+
+    return result.sub(factor)
   }
 
   negate()
@@ -284,10 +281,9 @@ class Vector3
 
   static Multiply(vector, factor)
   {
-    if(factor instanceof Vector3)
-      return new Vector3(vector.x * factor.x, vector.y * factor.y, vector.z * factor.z)
-    else
-      return new Vector3(vector.x * factor, vector.y * factor, vector.z * factor)
+    var result = new Vector3(vector)
+
+    return result.muliply(factor)
   }
 
   divide(factor)
@@ -310,26 +306,29 @@ class Vector3
 
   static Divide(vector, factor)
   {
-    if(factor instanceof Vector3)
-      return new Vector3(vector.x / factor.x, vector.y / factor.y, vector.z / factor.z)
-    else
-      return new Vector3(vector.x / factor, vector.y / factor, vector.z / factor)
+    var result = new Vector3(vector)
+
+    return result.divide(factor)
   }
 
   cross(vector)
   {
-    this.x = this.y * vector.z - this.z * vector.y
-    this.y = this.z * vector.x - this.x * vector.z
-    this.z = this.x * vector.y - this.y * vector.x
+    var x = this.x
+    var y = this.y
+    var z = this.z
+
+    this.x = y * vector.z - z * vector.y
+    this.y = z * vector.x - x * vector.z
+    this.z = x * vector.y - y * vector.x
 
     return this
   }
 
   static Cross(left, right)
   {
-    return new Vector3(left.y * right.z - left.z * right.y,
-                       left.z * right.x - left.x * right.z,
-                       left.x * right.y - left.y * right.x)
+    var result = new Vector3(left)
+
+    return result.cross(right)
   }
 
   dot(vector)
@@ -339,7 +338,7 @@ class Vector3
 
   static Dot(left, right)
   {
-    return left.x * right.x + left.y * right.y + left.z * right.z
+    return left.dot(right)
   }
 
   clamp(min, max)
@@ -353,9 +352,9 @@ class Vector3
 
   static Clamped(vector, min, max)
   {
-    return new Vector3(Math.clamp(vector.x, min.x, max.x),
-                       Math.clamp(vector.y, min.y, max.y),
-                       Math.clamp(vector.z, min.z, max.z))
+    var result = new Vector3(vector)
+
+    return result.clamp(min. max)
   }
 
   floor()
@@ -369,7 +368,9 @@ class Vector3
 
   static Floor(vector)
   {
-    return new Vector3(Math.floor(vector.x), Math.floor(vector.y), Math.floor(vector.z))
+    var result = new Vector3(vector)
+
+    return result.floor()
   }
 
   ceil()
@@ -383,7 +384,9 @@ class Vector3
 
   static Ceil(vector)
   {
-    return new Vector3(Math.ceil(vector.x), Math.ceil(vector.y), Math.ceil(vector.z))
+    var result = new Vector3(vector)
+
+    return result.ceil()
   }
 
   round()
@@ -397,7 +400,9 @@ class Vector3
 
   static Round(vector)
   {
-    return new Vector3(Math.round(vector.x), Math.round(vector.y), Math.round(vector.z))
+    var result = new Vector3(vector)
+
+    return result.round()
   }
 
   roundToOrigin()
@@ -411,9 +416,9 @@ class Vector3
 
   static RoundToOrigin(vector)
   {
-    return new Vector3(vector.x < 0 ? Math.ceil(vector.x) : Math.floor(vector.x),
-                       vector.y < 0 ? Math.ceil(vector.y) : Math.floor(vector.y),
-                       vector.z < 0 ? Math.ceil(vector.z) : Math.floor(vector.z))
+    var result = new Vector3(vector)
+
+    return result.roundToOrigin()
   }
 
   min(vector)
@@ -427,7 +432,9 @@ class Vector3
 
   static Min(left, right)
   {
-    return new Vector3(Math.min(left.x, right.x), Math.min(left.y, right.y), Math.min(left.z, right.z))
+    var result = new Vector3(left)
+
+    return result.min(right)
   }
 
   max(vector)
@@ -441,7 +448,9 @@ class Vector3
 
   static Max(left, right)
   {
-    return new Vector3(Math.max(left.x, right.x), Math.max(left.y, right.y), Math.max(left.z, right.z))
+    var result = new Vector3(left)
+
+    return result.max(right)
   }
 
   lerp(vector, alpha)
@@ -455,7 +464,9 @@ class Vector3
 
   static Lerp(from, to, alpha)
   {
-    return Vector3.Sub(to, from).muliply(alpha).add(from)
+    var result = new Vector3(from)
+
+    return result.lerp(to, alpha)
   }
 
   project(onNormal)
@@ -467,7 +478,9 @@ class Vector3
 
   static Projected(vector, onNormal)
   {
-    return Vector3.Multiply(onNormal, onNormal.dot(vector) / onNormal.sqrLength())
+    var result = new Vector3(vector)
+
+    return result.project(onNormal)
   }
 
   projectOnPlane(planeNormal)
@@ -477,7 +490,9 @@ class Vector3
 
   static ProjectedOnPlane(vector, on)
   {
-    return Vector3.Sub(vector, Vector3.Projected(vector, on))
+    var result = new Vector3(vector)
+
+    return result.projectOnPlane(on)
   }
 
   reflect(normal)
@@ -487,7 +502,9 @@ class Vector3
 
   static Reflected(vector, normal)
   {
-    return Vector3.Sub(vector, Vector3.Multiply(normal, 2 * vector.dot(normal)))
+    var result = new Vector3(vector)
+
+    return result.reflect(normal)
   }
 
   transform(trasformer)
