@@ -490,6 +490,25 @@ class Vector3
     return Vector3.Sub(vector, Vector3.Multiply(normal, 2 * vector.dot(normal)))
   }
 
+  transform(trasformer)
+  {
+    if(trasformer instanceof Matrix4)
+    {
+      this.x = trasformer.elements[0] * this.x + trasformer.elements[4] * this.y + trasformer.elements[8] * this.z + trasformer.elements[12]
+      this.y = trasformer.elements[1] * this.x + trasformer.elements[5] * this.y + trasformer.elements[9] * this.z + trasformer.elements[13]
+      this.z = trasformer.elements[2] * this.x + trasformer.elements[6] * this.y + trasformer.elements[10] * this.z + trasformer.elements[14]
+    }
+
+    return this
+  }
+
+  static Transformed(vector, trasformer)
+  {
+    var result = new Vector3(vector)
+
+    return result.transform(trasformer)
+  }
+
   static forward()
   {
     return new Vector3(0, 0, 1)
