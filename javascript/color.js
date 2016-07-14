@@ -8,7 +8,7 @@ class Color
 
   constructor()
   {
-    else if(arguments[0] instanceof Array)
+    if(arguments[0] instanceof Array)
     {
       this.r = arguments[0][0]
       this.g = arguments[0][1]
@@ -25,9 +25,9 @@ class Color
     else
     {
       this.r = arguments[0] || 0
-      this.g = arguments[0] || 0
-      this.b = arguments[0] || 0
-      this.a = arguments[0] || 1
+      this.g = arguments[1] || 0
+      this.b = arguments[2] || 0
+      this.a = arguments[3] || 1
     }
   }
 
