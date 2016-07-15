@@ -51,6 +51,7 @@ class Matrix4
 
   writeInArray(array, index)
   {
+    index = index || 0
     for(var i = 0; i < 16; i++)
     {
       array[index + i] = this.elements[i]
@@ -59,20 +60,23 @@ class Matrix4
     return array
   }
 
-  loadFromAray(array, index = 0)
+  loadFromAray(array, index)
   {
+    index = index || 0
     this.elements.set(array.slice(index, index + 16))
 
     return this
   }
 
-  static FromArray(array, index = 0)
+  static FromArray(array, index)
   {
+    index = index || 0
     return new Matrix4(array.slice(index, index + 16))
   }
 
-  toString(lineBreak = "")
+  toString(lineBreak)
   {
+    lineBreak = lineBreak || ""
     return "{{" + this.elements[0] + ", " + this.elements[1] + ", " + this.elements[2] + ", " + this.elements[3] + "}, " + lineBreak +
             "{" + this.elements[4] + ", " + this.elements[5] + ", " + this.elements[6] + ", " + this.elements[7] + "}, " + lineBreak +
             "{" + this.elements[8] + ", " + this.elements[9] + ", " + this.elements[10] + ", " + this.elements[11] + "}, " + lineBreak +
@@ -459,7 +463,7 @@ class Matrix4
     return result.makeRotationAxis(axis, theta)
   }
 
-  makeRotationFromEuler(euler, order = "XYZ")
+  makeRotationFromEuler(euler, order)
   {
     var cx = Math.cos(euler.x)
     var sx = Math.sin(euler.x)
@@ -468,7 +472,7 @@ class Matrix4
     var cz = Math.cos(euler.z)
     var sz = Math.sin(euler.z)
 
-    if(order === "XYZ" )
+    if(order === "XYZ" || order == undefined)
     {
       var cxcz = cx * cz
       var cxsz = cx * sz

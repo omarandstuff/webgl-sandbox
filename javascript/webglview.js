@@ -41,7 +41,7 @@ class WebGLView
 
   dispose()
   {
-    window.removeResizeListener(this.canvas, this.onCanvasResize.bind(this))
+    window.removeResizeListener(this.canvas_wrap, this.onCanvasResize.bind(this))
   }
 
   render()

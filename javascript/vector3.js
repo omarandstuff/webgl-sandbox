@@ -86,6 +86,7 @@ class Vector3
 
   writeInArray(array, index)
   {
+    index = index || 0
     array[index] = this.x
     array[index + 1] = thix.y
     array[index + 2] = this.z
@@ -93,8 +94,9 @@ class Vector3
     return array
   }
 
-  loadFromAray(array, index = 0)
+  loadFromAray(array, index)
   {
+    index = index || 0
     this.x = array[index] || 0
     this.y = array[index + 1] || 0
     this.z = array[index + 2] || 0
@@ -102,8 +104,9 @@ class Vector3
     return this
   }
 
-  static FromArray(array, index = 0)
+  static FromArray(array, index)
   {
+    index = index || 0
     return new Vector3(array[index], array[index + 1], array[index + 2])
   }
 

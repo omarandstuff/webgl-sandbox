@@ -85,6 +85,7 @@ class Color
 
   writeInArray(array, index)
   {
+    index = index || 0
     array[index] = this.r
     array[index + 1] = thix.g
     array[index + 2] = this.b
@@ -93,8 +94,9 @@ class Color
     return array
   }
 
-  loadFromAray(array, index = 0)
+  loadFromAray(array, index)
   {
+    index = index || 0
     this.r = array[index] || 0
     this.g = array[index + 1] || 0
     this.b = array[index + 2] || 0
@@ -103,8 +105,9 @@ class Color
     return this
   }
 
-  static FromArray(array, index = 0)
+  static FromArray(array, index)
   {
+    index = index || 0
     return new Color(array[index], array[index + 1], array[index + 2], array[index + 3])
   }
 
